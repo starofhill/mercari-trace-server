@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-  has_many_attached :images
+  has_one_attached :image
 
   validates :name, presence: true
   validates :description, presence: true
