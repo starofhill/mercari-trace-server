@@ -23,6 +23,15 @@ class Api::V1::ProductsController < ApplicationController
     end
   end
 
+  def destroy
+    @product = Product.find_by(id: params[:id])
+    render json: { message: "Product not found" }, status: :not_found and return if @product.blank?
+
+    if @product.destroy
+      render json: { message: "Success" }
+    end
+  end
+
   private
     def product_params
       params.require(:product).permit(:name, :description, :image, :price, :status, :category)
