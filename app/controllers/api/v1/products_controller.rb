@@ -1,12 +1,16 @@
 class Api::V1::ProductsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
+
   def index
     @products = Product.all
-    render json: @products
+    render json: @products.to_json(except: :updated_at, include: { user: { only: :name } })
   end
 
   def show
     @product = Product.find_by(id: params[:id])
-    render json: @product
+
+    res = @product.to_json(except: :updated_at, include: { user: { only: :name } })
+    render json: res
   end
 
   def create
@@ -16,7 +20,11 @@ class Api::V1::ProductsController < ApplicationController
       @product.image.attach(Base64Parser.call(base64: product_params[:image]))
       # @product.image_url = rails_representation_url(@product.image.variant({}))
       @product.image_url = @product.image.service_url
+    else
+      render json: { message: "Image not found" }, status: :not_found and return
     end
+
+    @product.user_id = current_user.id
 
     if @product.save
       render json: @product
@@ -34,7 +42,7 @@ class Api::V1::ProductsController < ApplicationController
 
   private
     def product_params
-      params.require(:product).permit(:name, :description, :image, :price, :status, :category)
+      params.require(:product).permit(:name, :description, :price, :status, :category, :image)
     end
 
 end
