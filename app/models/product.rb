@@ -4,4 +4,6 @@ class Product < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
   validates :price, numericality: { onlyinteger: true }
+
+  belongs_to :user
 end
