@@ -9,7 +9,7 @@ class Api::V1::ProductsController < ApplicationController
   def show
     @product = Product.find_by(id: params[:id])
 
-    res = @product.to_json(except: :updated_at, include: { user: { only: :name } })
+    res = @product.to_json(except: :updated_at, include: [{ user: { only: :name } }, :comments])
     render json: res
   end
 
