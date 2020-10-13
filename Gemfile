@@ -49,3 +49,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]\
 gem "google-cloud-storage", "~> 1.11", require: false
 gem "mini_magick"
 gem "devise_token_auth"
+gem "active_model_serializers"
