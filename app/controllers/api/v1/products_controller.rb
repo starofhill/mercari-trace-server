@@ -3,14 +3,13 @@ class Api::V1::ProductsController < ApplicationController
 
   def index
     @products = Product.all
-    render json: @products.to_json(except: :updated_at, include: { user: { only: :name } })
+    render json: @products, each_serializer: ProductSerializer
   end
 
   def show
     @product = Product.find_by(id: params[:id])
 
-    res = @product.to_json(except: :updated_at, include: [{ user: { only: :name } }, :comments])
-    render json: res
+    render json: @product, serializer: ProductContentSerializer
   end
 
   def create
