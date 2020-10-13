@@ -6,4 +6,5 @@ class Product < ApplicationRecord
   validates :price, numericality: { onlyinteger: true }
 
   belongs_to :user
+  has_many :comments
 end
