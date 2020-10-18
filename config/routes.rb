@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       resources :products do
         resources :comments
       end
+
+      resources :purchases
     end
   end
 end
