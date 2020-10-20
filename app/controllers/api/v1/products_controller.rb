@@ -27,6 +27,8 @@ class Api::V1::ProductsController < ApplicationController
 
     if @product.save
       render json: @product
+    else
+      render json: { message: "処理が完了しませんでした" }, status: :internal_server_error
     end
   end
 
@@ -36,12 +38,14 @@ class Api::V1::ProductsController < ApplicationController
 
     if @product.destroy
       render json: { message: "Success" }
+    else
+      render json: { message: "False" }
     end
   end
 
   private
     def product_params
-      params.require(:product).permit(:name, :description, :price, :status, :category, :image)
+      params.require(:product).permit(:name, :description, :price, :status, :category, :image, :condition, :prefecture, :shipping_method, :shipping_fee, :shipping_day)
     end
 
 end
