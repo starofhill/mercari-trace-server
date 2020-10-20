@@ -8,6 +8,8 @@ class Api::V1::CommentsController < ApplicationController
 
     if @comment.save
       render json: @comment
+    else
+      render json: { message: "コメントが作成できませんでした" }, status: :internal_server_error
     end
   end
 

@@ -19,12 +19,14 @@ class Api::V1::PurchasesController < ApplicationController
         @purchase.total_price = product.price
       end
     else
-      render json: {message: "Product not found"}, status: :not_found and return
+      render json: { message: "Product not found" }, status: :not_found and return
     end
 
     if @purchase.save
       product.update(status: "sold")
       render json: @purchase
+    else
+      render json: { message: "処理が完了しませんでした"}, status: :internal_server_error
     end
   end
 
