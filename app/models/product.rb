@@ -3,7 +3,11 @@ class Product < ApplicationRecord
 
   validates :name, presence: true
   validates :description, presence: true
-  validates :price, numericality: { onlyinteger: true }
+  validates :price, numericality: { onlyinteger: true }, presence: true
+  validates :condition, inclusion: { in: ("a".."f") }
+  validates :prefecture, presence: true
+  validates :shipping_method, presence: true
+  validates :shipping_fee, presence: true
 
   belongs_to :user
   has_many :comments

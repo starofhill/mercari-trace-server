@@ -2,6 +2,8 @@ class Purchase < ApplicationRecord
   belongs_to :user
   belongs_to :product
 
+  validates :payment_method, presence: true
+
   enum payment_method: {
     credit: 1,
     merpay: 2,
